@@ -25,14 +25,11 @@ def add_todo():
     title = data['title']
 
     with db.engine.connect() as conn:
-        # Begin a transaction
         trans = conn.begin()
         try:
             conn.execute(text('INSERT INTO todos (title) VALUES (:title)'), {'title': title})
-            # Commit the transaction
             trans.commit()
         except:
-            # Rollback the transaction if there's an error
             trans.rollback()
             return jsonify(message="Error occurred while adding todo"), 500
 
@@ -43,7 +40,6 @@ def add_todo():
 def get_todos():
     with db.engine.connect() as conn:
         result = conn.execute(text('SELECT * FROM todos'))
-        # Use the _mapping attribute to convert rows to dictionaries
         todos = [dict(row._mapping) for row in result]
 
     return jsonify(todos)
@@ -65,14 +61,11 @@ def update_todo(id):
     title = data['title']
 
     with db.engine.connect() as conn:
-        # Begin a transaction
         trans = conn.begin()
         try:
             conn.execute(text('UPDATE todos SET title = :title WHERE id = :id'), {'title': title, 'id': id})
-            # Commit the transaction
             trans.commit()
         except:
-            # Rollback the transaction if there's an error
             trans.rollback()
             return jsonify(message="Error occurred while updating todo"), 500
 
@@ -82,14 +75,11 @@ def update_todo(id):
 @todos_bp.route('/todo/<int:id>', methods=['DELETE'])
 def delete_todo(id):
     with db.engine.connect() as conn:
-        # Begin a transaction
         trans = conn.begin()
         try:
             conn.execute(text('DELETE FROM todos WHERE id = :id'), {'id': id})
-            # Commit the transaction
             trans.commit()
         except:
-            # Rollback the transaction if there's an error
             trans.rollback()
             return jsonify(message="Error occurred while deleting todo"), 500
 
