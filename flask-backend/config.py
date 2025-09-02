@@ -1,4 +1,4 @@
-# File: flask-backend/config.py
+# flask-backend/config.py
 
 import os
 

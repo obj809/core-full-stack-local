@@ -1,3 +1,5 @@
+// react-frontend/src/pages/StaticPage.tsx
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchMessage } from '../services/todoService';

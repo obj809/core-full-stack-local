@@ -1,3 +1,5 @@
+// react-frontend/src/forms/TodoForm.tsx
+
 import React, { useState } from 'react';
 
 interface TodoFormProps {
@@ -12,7 +14,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialTitle = '', button
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(title, ''); // Pass an empty string as the second argument
+    onSubmit(title, '');
     setTitle('');
   };
 

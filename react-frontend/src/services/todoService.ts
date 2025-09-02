@@ -1,9 +1,10 @@
+// react-frontend/src/services/todoService.ts
+
 export interface Todo {
   id: number;
   title: string;
 }
 
-// LOCAL BACKEND PORT
 const API_URL = 'http://127.0.0.1:5000/';
 
 export const fetchTodos = async (): Promise<Todo[]> => {
