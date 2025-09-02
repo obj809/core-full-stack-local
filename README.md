@@ -1,1 +1,1 @@
-# core-full-stack
+# core-full-stack-local
