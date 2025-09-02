@@ -25,36 +25,32 @@ def test_db_connection():
             host=MYSQL_HOST,
             user=MYSQL_USER,
             passwd=MYSQL_PASSWORD,
-            db=MYSQL_DB  # 👈 this selects `core-full-stack` by default
+            db=MYSQL_DB
         )
 
         print("Successfully connected to the database.")
 
         cursor = connection.cursor()
 
-        # Show version
         cursor.execute("SELECT VERSION()")
         version = cursor.fetchone()
         print(f"MySQL Server Version: {version[0]}")
 
-        # Verify the active database
         cursor.execute("SELECT DATABASE()")
         active_db = cursor.fetchone()
         print(f"Currently using database: {active_db[0]}")
 
-        # Show all tables in this DB
         cursor.execute("SHOW TABLES")
         tables = cursor.fetchall()
         print("Tables in the database:")
         for table in tables:
             print(f"- {table[0]}")
 
-        # Query the todos table
         print("\nTodos in the database:")
         cursor.execute("SELECT * FROM todos")
         todos = cursor.fetchall()
         for todo in todos:
-            print(todo)  # each row is a tuple (id, title)
+            print(todo)
 
         cursor.close()
         connection.close()
