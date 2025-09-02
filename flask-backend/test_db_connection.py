@@ -19,39 +19,42 @@ def test_db_connection():
             raise ValueError("One or more environment variables are not set. Please check your .env file.")
 
         print(f"MYSQL_HOST: {MYSQL_HOST}")
-        print(f"MYSQL_USER: {MYSQL_USER}")
-        print(f"MYSQL_PASSWORD: {MYSQL_PASSWORD}")
         print(f"MYSQL_DB: {MYSQL_DB}")
 
         connection = pymysql.connect(
             host=MYSQL_HOST,
             user=MYSQL_USER,
             passwd=MYSQL_PASSWORD,
-            db=MYSQL_DB
+            db=MYSQL_DB  # 👈 this selects `core-full-stack` by default
         )
 
         print("Successfully connected to the database.")
 
         cursor = connection.cursor()
 
+        # Show version
         cursor.execute("SELECT VERSION()")
         version = cursor.fetchone()
         print(f"MySQL Server Version: {version[0]}")
 
-        print(f"MySQL Server IP Address: {MYSQL_HOST}")
+        # Verify the active database
+        cursor.execute("SELECT DATABASE()")
+        active_db = cursor.fetchone()
+        print(f"Currently using database: {active_db[0]}")
 
-        cursor.execute("SHOW DATABASES")
-        databases = cursor.fetchall()
-        print("Databases on the server:")
-        for db in databases:
-            print(f"- {db[0]}")
+        # Show all tables in this DB
+        cursor.execute("SHOW TABLES")
+        tables = cursor.fetchall()
+        print("Tables in the database:")
+        for table in tables:
+            print(f"- {table[0]}")
 
-        cursor.execute("SELECT 1")
-        result = cursor.fetchone()
-        if result:
-            print("Connection to the database was successful!")
-        else:
-            print("Connection to the database failed.")
+        # Query the todos table
+        print("\nTodos in the database:")
+        cursor.execute("SELECT * FROM todos")
+        todos = cursor.fetchall()
+        for todo in todos:
+            print(todo)  # each row is a tuple (id, title)
 
         cursor.close()
         connection.close()

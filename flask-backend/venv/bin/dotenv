@@ -1,4 +1,4 @@
-#!/Users/softdev/Desktop/github-projects/tech-stack-collection/flask-react/backend/venv/bin/python3.13
+#!/Users/softdev/Desktop/github_projects/core-full-stack/flask-backend/venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys
